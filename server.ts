@@ -1,18 +1,20 @@
 
+import cluster from 'node:cluster';
+import os from 'node:os';
+import process from 'node:process'
 import express,{Application ,Request,Response,NextFunction} from 'express'
 import connectToDb, { closeDbConnection } from './src/services/db.service';
 import config, { checkEnvironmentVariables } from './utils/config';
 import logger from './utils/pino'
 import ghgEmissionsRouter from './src/routes/ghg-emissions.routes'
-import cluster from 'node:cluster';
-import os from 'node:os';
-import process from 'node:process'
 const app:Application = express()
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 
+//connecting to db
 connectToDb()
+//checking for environment variables 
 checkEnvironmentVariables()
 
 //logging the oncoming requests
@@ -20,9 +22,13 @@ app.use((req, res, next) => {
   logger.info(`${req.method} ${req.path} - ${req.ip}`);
   next();
 });
+
+//API routes
 app.use('/api/ghg_emissions',ghgEmissionsRouter)
 
 
+// using the cluster module to create multiple workers
+// spawn a worker for each CPU core -2
 // const numCPUs = os.cpus().length-2;
 // logger.info(`Number of CPUs: ${numCPUs}`);
 
@@ -38,12 +44,11 @@ app.use('/api/ghg_emissions',ghgEmissionsRouter)
 //     logger.info(`worker ${worker.process.pid} died`);
 //   });
 // } else {
-//   // Workers can share any TCP connection
-//   // In this case it is an HTTP server
-  
+//  Workers can share connection
 //   logger.info(`Worker ${process.pid} started`);
 // }
 
+//THe cluster approach have a long startup time and is not suitable for small applications and development
 
 app
   .listen(config.PORT, () => {
@@ -53,6 +58,10 @@ app
     closeDbConnection();
     logger.error(err);
   });
+
+//This wll spawn a worker for each CPU core -2 which can be used to handle the incoming requests
+//The cluster module will automatically load balance the incoming requests among the workers
+
 
 
 

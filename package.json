@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec ts-node server.ts",
-    "populateDb": "ts-node ./utils/populateDb.ts",
+    "populateDb": "ts-node ./scripts/populateDb.ts",
     "redis": "redis-server",
-    "populateDbApi": "ts-node ./utils/populateDbUsingEndpoint.ts",
+    "populateDbApi": "ts-node ./scripts/populateDbUsingEndpoint.ts",
     "build": "tsc"
   },
   "keywords": [],

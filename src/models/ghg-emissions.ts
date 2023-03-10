@@ -1,6 +1,7 @@
 /** @format */
 
 import mongoose from 'mongoose';
+import { setCache } from '../services/redis.service';
 enum parameter {
   CO2 = "CO2",
   NO2 = "NO2",
@@ -17,7 +18,6 @@ export interface IghgEmissions {
 
 
 const ghgEmissionsSchema = new mongoose.Schema<IghgEmissions>({
-  // Define the fields in your data
   country: {type: String, required: true },
   year: {type: String, required: true},
   value: {type: Number, required: true},
@@ -28,8 +28,11 @@ const ghgEmissionsSchema = new mongoose.Schema<IghgEmissions>({
   }
 });
 
-const GhgEmissionsModel = mongoose.model<IghgEmissions>('ghgEmissions', ghgEmissionsSchema);
 
+
+
+
+const GhgEmissionsModel = mongoose.model<IghgEmissions>('ghgEmissions', ghgEmissionsSchema);
 
 
 export default GhgEmissionsModel;
