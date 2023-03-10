@@ -1,0 +1,25 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Environment variables
+.env*
+
+# Dependencies
+node_modules
+
+# Redis dump files
+dump.rdb
+
+# Build files
+build
+
+# Compiled output
+dist
+
+# IDE files
+.idea
+.vscode
+
+dist/*

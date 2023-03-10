@@ -1,0 +1,33 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec ts-node server.ts",
+    "populateDb": "ts-node ./utils/populateDb.ts",
+    "redis": "redis-server",
+    "populateDbApi": "ts-node ./utils/populateDbUsingEndpoint.ts",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "axios": "^1.3.4",
+    "csv-parser": "^3.0.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "joi": "^17.8.3",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.1",
+    "pino": "^8.11.0",
+    "pino-pretty": "^9.4.0",
+    "redis": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.1",
+    "nodemon": "^2.0.21"
+  }
+}
